@@ -9,13 +9,15 @@
 
 Summary:	Breadth-first version of the UNIX find command
 Name:		bfs
-Version:	4.1
+Version:	4.1.4
 Release:	1
 License:	0BSD
 Group:		Applications/File
 #Source0Download: https://github.com/tavianator/bfs/releases
 Source0:	https://github.com/tavianator/bfs/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	40397f6c724a1845016ff2367d20c3fe
+# Source0-md5:	2647c6dd6f4f9bec2a367bc1081f1027
+# https://github.com/tavianator/bfs/commit/568c1bd03a723df7585b293b18d0f43d0b051295
+Patch0:		%{name}-getfilecon-leak.patch
 URL:		https://bfs.tavianator.com/
 BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	rpm-build >= 4.6
@@ -65,17 +67,18 @@ zsh-completion for bfs.
 
 %prep
 %setup -qc -n %{name}-%{version}
+%patch -P0 -p1
 
 %build
 ./configure \
 	--prefix=%{_prefix} \
 	--mandir=%{_mandir} \
 	--enable-release \
-	%{!?with_acl:--without-libacl} \
-	%{!?with_cap:--without-libcap} \
-	%{!?with_selinux:--without-libselinux} \
-	%{!?with_uring:--without-liburing} \
-	%{!?with_oniguruma:--without-oniguruma} \
+	--with%{!?with_acl:out}-libacl \
+	--with%{!?with_cap:out}-libcap \
+	--with%{!?with_selinux:out}-libselinux \
+	--with%{!?with_uring:out}-liburing \
+	--with%{!?with_oniguruma:out}-oniguruma \
 	CC="%{__cc}" \
 	EXTRA_CPPFLAGS="%{rpmcppflags}" \
 	EXTRA_CFLAGS="%{rpmcflags}" \
