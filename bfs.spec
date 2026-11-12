@@ -9,15 +9,13 @@
 
 Summary:	Breadth-first version of the UNIX find command
 Name:		bfs
-Version:	4.1.4
+Version:	4.1.7
 Release:	1
 License:	0BSD
 Group:		Applications/File
 #Source0Download: https://github.com/tavianator/bfs/releases
 Source0:	https://github.com/tavianator/bfs/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	2647c6dd6f4f9bec2a367bc1081f1027
-# https://github.com/tavianator/bfs/commit/568c1bd03a723df7585b293b18d0f43d0b051295
-Patch0:		%{name}-getfilecon-leak.patch
+# Source0-md5:	5a57218b31ac901ac21948b23fd0d239
 URL:		https://bfs.tavianator.com/
 BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	rpm-build >= 4.6
@@ -67,7 +65,6 @@ zsh-completion for bfs.
 
 %prep
 %setup -qc -n %{name}-%{version}
-%patch -P0 -p1
 
 %build
 ./configure \
